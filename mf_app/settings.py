@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     'core',
     'users',
     'corsheaders',
-    'drf_spectacular'
-    
-    
+
 ]
 
 MIDDLEWARE = [
