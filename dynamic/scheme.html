@@ -413,7 +413,7 @@ document.addEventListener('click', function (event) {
         const entry = JSON.parse(event.target.getAttribute('data-entry'));
 
         // Send a POST request to the server with item and provider data
-        fetch('https://vyable-be.onrender.com/schemeviewer/', {
+        fetch('https://vyable-be.onrender.com/schemes/schemeviewer/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
