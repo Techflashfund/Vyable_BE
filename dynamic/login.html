@@ -392,7 +392,7 @@
                 loginOtpModal.hide();
                 sessionStorage.setItem('accessToken',data.access_token);
                 sessionStorage.setItem('user', JSON.stringify(data.user));
-                window.location.href = 'http://127.0.0.1:8000/index/';
+                window.location.href = 'https://vyable-be.onrender.com/index/';
                 clearInterval(loginResendTimer);
                 document.getElementById('resendLoginTimer').textContent = '';
             } else {

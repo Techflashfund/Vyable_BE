@@ -431,7 +431,7 @@
             // document.getElementById('userEmail').textContent = user.email || ''; // Removed: no element with id=userEmail
             console.log("Loaded user data from sessionStorage:", user);
         } else {
-            window.location.href = '/login/';
+            window.location.href = 'https://vyable-be.onrender.com/login/';
         }
 
         // Portfolio Allocation Chart
@@ -514,7 +514,7 @@
             if (response.ok) {
                 const result = await response.json();
                 sessionStorage.setItem('investData', JSON.stringify(result));
-                window.location.href = '/schemes/';
+                window.location.href = 'https://vyable-be.onrender.com/schemes/';
             } else {
                 console.error("Search failed:", response.status);
             }
@@ -528,7 +528,7 @@
         if (token) {
             fetchSearchResults();
         } else {
-            window.location.href = '/login/';
+            window.location.href = 'https://vyable-be.onrender.com/login/';
         }
     });
 
