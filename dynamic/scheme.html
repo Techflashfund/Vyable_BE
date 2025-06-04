@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund Schemes List | BPP Name</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #000435;
+            --secondary-color: #ffffff;
+            --sidebar-width: 250px;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--primary-color);
+            background-color: #f9f9ff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+        
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Table Styles */
+        .schemes-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 4, 53, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .schemes-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .schemes-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .schemes-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .schemes-table tr:hover {
+            background-color: #f5f5ff;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-active {
+            background-color: #e6f7ee;
+            color: #00a854;
+        }
+        
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .action-btn:hover {
+            background-color: #00032e;
+        }
+        
+        .category-chain {
+            font-size: 12px;
+            color: #666;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 5px;
+        }
+        
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: black;
+        }
+        
+        .scheme-details {
+            margin-top: 20px;
+        }
+        
+        .detail-group {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            margin-left: 10px;
+        }
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: calc(-1 * var(--sidebar-width));
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .main-content.active {
+                margin-left: var(--sidebar-width);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .schemes-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2>BPP Name</h2>
+        </div>
+        <div class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-list"></i>
+                    <span>Schemes</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-wallet"></i>
+                    <span>Investments</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h2>Mutual Fund Schemes</h2>
+            <div class="user-profile">
+                <h2><div id="userName" class="fw-bold"></div></h2>
+            </div>
+        </div>
+
+        <!-- Schemes Table -->
+        <table class="schemes-table">
+            <thead>
+                <tr>
+                    <th>Fund Name</th>
+                    <th>Provider</th>
+                    <th>Status</th>
+                    <th>Loads</th>
+                    <th>NFO Period</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="schemeTableBody">
+                <!-- Scheme Row 1 -->
+                <tr><td colspan="7">Loading schemes...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="schemeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="schemeDetails" class="scheme-details">
+                <!-- Details will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+
+            if (user) {
+                document.getElementById('userName').textContent = 'Hi ' + user.name || '';
+                document.getElementById('userEmail').textContent = user.email || '';
+                console.log("Loaded user data from localStorage:", user);
+            } else {
+                window.location.href = '/login/';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const schemeTableBody = document.getElementById('schemeTableBody');
+            const schemeModal = document.getElementById('schemeModal');
+            const schemeDetails = document.getElementById('schemeDetails');
+            const closeModal = document.querySelector('.close-modal');
+            const payload = {
+                transaction_id: localStorage.getItem('transaction_id'),
+                message_id: localStorage.getItem('message_id')
+            };
+
+            // Close modal when clicking X or outside
+            closeModal.addEventListener('click', () => schemeModal.style.display = 'none');
+            window.addEventListener('click', (e) => {
+                if (e.target === schemeModal) {
+                    schemeModal.style.display = 'none';
+                }
+            });
+
+            fetch('/api/investdata/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('accessToken')
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not OK");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!Array.isArray(data) || data.length === 0) {
+                    schemeTableBody.innerHTML = '<tr><td colspan="7">No schemes found.</td></tr>';
+                    return;
+                }
+
+                schemeTableBody.innerHTML = ''; // Clear old rows
+
+                data.forEach(entry => {
+    const providers = entry.payload?.message?.catalog?.providers || [];
+    providers.forEach(provider => {
+        const items = provider.items || [];
+        items.forEach(item => {
+            // Extract scheme information from tags
+            const schemeInfoTag = item.tags?.find(tag => tag.descriptor?.code === 'SCHEME_INFORMATION');
+            const schemeInfo = {};
+            schemeInfoTag?.list?.forEach(info => {
+                schemeInfo[info.descriptor?.code] = info.value;
+            });
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <strong>${item.descriptor?.name || 'N/A'}</strong><br>
+                    <span class="text-muted">${item.descriptor?.code || ''}</span>
+                </td>
+                <td>${provider.descriptor?.name || 'N/A'}</td>
+                <td><span class="badge ${schemeInfo['STATUS'] === 'active' ? 'badge-active' : 'badge-inactive'}">${schemeInfo['STATUS'] || 'inactive'}</span></td>
+                <td>
+                    Entry: ${schemeInfo['ENTRY_LOAD'] || '—'}<br>
+                    Exit: ${schemeInfo['EXIT_LOAD'] || '—'}
+                </td>
+                <td>
+                    ${schemeInfo['NFO_START_DATE'] || '—'} to ${schemeInfo['NFO_END_DATE'] || '—'}<br>
+                    <small>${schemeInfo['NFO_REOPEN_DATE'] ? 'Reopens: ' + schemeInfo['NFO_REOPEN_DATE'] : ''}</small>
+                </td>
+                <td>
+                    <button class="action-btn view-btn" 
+                        data-entry='${JSON.stringify(entry)}'>
+                        View
+                    </button>
+                   
+                </td>
+            `;
+            schemeTableBody.appendChild(row);
+        });
+    });
+});
+
+
+                // Add event listeners to View buttons after they're created
+document.addEventListener('click', function (event) {
+    if (event.target.matches('.view-btn')) {
+        const entry = JSON.parse(event.target.getAttribute('data-entry'));
+
+        // Send a POST request to the server with item and provider data
+        fetch('schemeviewer/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+               'Authorization': 'Bearer ' + sessionStorage.getItem('accessToken')
+            },
+            body: JSON.stringify(entry)
+        })
+        .then(response => response.text())
+        .then(html => {
+            // Replace current content with response HTML (optional)
+            document.open();
+            document.write(html);
+            document.close();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+});
+            })});
+    </script>
+</body>
+</html>

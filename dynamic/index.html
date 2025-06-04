@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthFront Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+  /* Optional: smooth fade-in/fade-out */
+ /* Modal background - full screen with dim */
+  #panModal {
+    display: none; /* Hidden by default */
+    position: fixed; 
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+  }
+
+  /* Show modal */
+  #panModal.active {
+    display: flex;
+  }
+
+  /* Modal box styling */
+  .modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  /* Close button */
+  .close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+
+  /* Form inputs */
+  input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  /* Buttons */
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .cancel-btn {
+    background-color: #ccc;
+    margin-right: 10px;
+  }
+        :root {
+            --primary-color: #000435;
+            --secondary-color: #ffffff;
+            --sidebar-width: 250px;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--primary-color);
+            background-color: #f9f9ff;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+        
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 4, 53, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-weight: 600;
+        }
+        
+        /* Portfolio Summary */
+        .portfolio-summary {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .portfolio-value {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        /* Buttons */
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: #00032e;
+            color: white;
+        }
+        .hidden {
+  display: none !important;
+}
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: calc(-1 * var(--sidebar-width));
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .main-content.active {
+                margin-left: var(--sidebar-width);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h3>Vyable</h3>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Portfolio</span>
+                </a>
+            </li>
+<li class="nav-item">
+    <a href="#" id="activateAccountLink">
+      <i class="fas fa-exchange-alt"></i>
+      <span>Activate Account</span>
+    </a>
+  </li>
+            <li class="nav-item">
+                <a href="#" id="investLink" class="nav-link">
+                    <i class="fas fa-piggy-bank"></i>
+                    <span>Invest</span>
+                </a>
+            </li>
+           
+           
+        </ul>
+    </div>
+    <div id="app">
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <button class="btn d-lg-none" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40" alt="User" />
+                <div>
+                    <div id="userName" class="fw-bold"></div>
+                    <small class="text-muted">Premium Member</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Summary -->
+        <div class="portfolio-summary">
+            <h4>Your Portfolio Value</h4>
+            <div class="portfolio-value">$42,568.90</div>
+            <div class="d-flex justify-content-between">
+                <small>+$1,234.56 (2.98%) today</small>
+                <a href="#" class="text-white">View Details →</a>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-md-3 col-6 mb-3">
+                <button class="btn btn-primary-custom w-100">
+                    <i class="fas fa-plus mr-2"></i> Deposit
+                </button>
+            </div>
+            <div class="col-md-3 col-6 mb-3">
+                <button class="btn btn-primary-custom w-100">
+                    <i class="fas fa-minus mr-2"></i> Withdraw
+                </button>
+            </div>
+            <div class="col-md-3 col-6 mb-3">
+                <button class="btn btn-primary-custom w-100">
+                    <i class="fas fa-exchange-alt mr-2"></i> Transfer
+                </button>
+            </div>
+            <div class="col-md-3 col-6 mb-3">
+                <button class="btn btn-primary-custom w-100">
+                    <i class="fas fa-chart-pie mr-2"></i> Rebalance
+                </button>
+            </div>
+        </div>
+
+        <!-- Investment Cards -->
+        <div class="row">
+            <!-- Portfolio Allocation -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Portfolio Allocation</span>
+                        <a href="#" class="text-primary-custom">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="allocationChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Recent Transactions</span>
+                        <a href="#" class="text-primary-custom">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Transaction</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Jun 12</td>
+                                        <td>Deposit</td>
+                                        <td class="text-success">+$5,000.00</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jun 10</td>
+                                        <td>Stock Purchase</td>
+                                        <td class="text-danger">-$2,345.67</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jun 8</td>
+                                        <td>Dividend</td>
+                                        <td class="text-success">+$123.45</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jun 5</td>
+                                        <td>Fund Transfer</td>
+                                        <td class="text-danger">-$1,000.00</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <span>Portfolio Performance</span>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="performanceChart" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- Activte -->
+
+  <!-- Modal -->
+<div id="panModal">
+  <div class="modal-content">
+    <button class="close-btn" id="closeModal">&times;</button>
+    <h2>Enter PAN Details</h2>
+    <form id="panForm">
+      <label for="pan_number">PAN Number</label>
+      <input type="text" id="pan_number" maxlength="10" required />
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" />
+
+      <div style="text-align:right;">
+        <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+        <button type="submit" class="submit-btn">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(sessionStorage.getItem('user'));
+
+        if (user) {
+            document.getElementById('userName').textContent = user.name || '';
+            // document.getElementById('userEmail').textContent = user.email || ''; // Removed: no element with id=userEmail
+            console.log("Loaded user data from sessionStorage:", user);
+        } else {
+            window.location.href = '/login/';
+        }
+
+        // Portfolio Allocation Chart
+        const allocationCtx = document.getElementById('allocationChart').getContext('2d');
+        new Chart(allocationCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Stocks', 'Bonds', 'Real Estate', 'Commodities', 'Cash'],
+                datasets: [{
+                    data: [45, 25, 15, 10, 5],
+                    backgroundColor: ['#000435', '#3a4a6b', '#6b7fa3', '#9db4db', '#cfd9ed'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '70%',
+                plugins: { legend: { position: 'right' } }
+            }
+        });
+
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Your Portfolio',
+                        data: [38000, 39500, 41000, 40200, 41500, 42568],
+                        borderColor: '#000435',
+                        backgroundColor: 'rgba(0, 4, 53, 0.05)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'S&P 500',
+                        data: [35000, 36000, 37000, 36500, 37500, 38000],
+                        borderColor: '#6b7fa3',
+                        borderWidth: 1,
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                scales: { y: { beginAtZero: false } }
+            }
+        });
+    });
+
+    const token = sessionStorage.getItem('accessToken');
+
+    function generateUUID() {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
+    async function fetchSearchResults() {
+        const transaction_id = generateUUID();
+        const message_id = generateUUID();
+
+        localStorage.setItem('transaction_id', transaction_id);
+        localStorage.setItem('message_id', message_id);
+
+        const payload = { transaction_id, message_id };
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/investsearch/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                sessionStorage.setItem('investData', JSON.stringify(result));
+                window.location.href = '/schemes/';
+            } else {
+                console.error("Search failed:", response.status);
+            }
+        } catch (error) {
+            console.error("Search error:", error);
+        }
+    }
+
+    document.getElementById('investLink').addEventListener('click', function (e) {
+        e.preventDefault();
+        if (token) {
+            fetchSearchResults();
+        } else {
+            window.location.href = '/login/';
+        }
+    });
+
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('mainContent').classList.toggle('active');
+    });
+
+const modal = document.getElementById('panModal');
+  const openBtn = document.getElementById('activateAccountLink');
+  const closeBtn = document.getElementById('closeModal');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const panForm = document.getElementById('panForm');
+
+  // Open modal
+  openBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.add('active');
+  });
+
+  // Close modal functions
+  function closeModal() {
+    modal.classList.remove('active');
+  }
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+
+  // Optional: close modal if user clicks outside modal-content
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Form submit handler
+  panForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const panNumber = document.getElementById('pan_number').value.trim();
+    const dob = document.getElementById('dob').value;
+
+    // Replace with your token retrieval method
+    const token = sessionStorage.getItem('accessToken');
+
+    try {
+      const response = await fetch('/api/user-pan/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          pan_number: panNumber,
+          dob: dob || null
+        }),
+      });
+
+      if (response.ok) {
+        alert('PAN info submitted successfully!');
+        closeModal();
+      } else {
+        const errData = await response.json();
+        alert('Error: ' + (errData.detail || JSON.stringify(errData)));
+      }
+    } catch (err) {
+      alert('Request failed: ' + err.message);
+    }
+  });
+</script>
+
+</body>
+</html>

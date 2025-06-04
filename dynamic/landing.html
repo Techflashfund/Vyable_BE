@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthFront Mutual Funds</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000435;
+            --secondary-color: #ffffff;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--primary-color);
+        }
+        
+        .bg-primary-custom {
+            background-color: var(--primary-color);
+        }
+        
+        .text-primary-custom {
+            color: var(--primary-color);
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-custom {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .btn-outline-custom:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 4, 53, 0.1);
+        }
+        
+        .nav-link {
+            font-weight: 600;
+            position: relative;
+            margin: 0 10px;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .hero {
+            padding: 150px 0 100px;
+            background: linear-gradient(135deg, rgba(0, 4, 53, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 4, 53, 0.05);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .how-it-works {
+            background-color: #f9f9ff;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        
+        .cta-section {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .cta-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid white;
+        }
+        
+        .cta-btn:hover {
+            background-color: transparent;
+            color: white;
+        }
+        
+        footer {
+            background-color: #f9f9ff;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Vyable</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="login" class="btn btn-outline-custom" >Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1 class="mb-4 fw-bold">Smart Investing Made Simple</h1>
+            <p class="lead mb-5 mx-auto" style="max-width: 700px;">
+                Grow your wealth with our expertly managed mutual funds. Start with as little as $500 and watch your investments flourish with our low fees and high returns.
+            </p>
+            <div class="d-flex flex-column flex-md-row justify-content-center gap-3 hero-buttons">
+                <a href="#start" class="btn btn-primary-custom">Get Started</a>
+                <a href="#learn-more" class="btn btn-outline-custom">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="features">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Why Choose Our Mutual Funds</h2>
+                <p class="text-muted mx-auto" style="max-width: 700px;">
+                    We combine expert fund management with cutting-edge technology to deliver superior returns for our investors.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Proven Performance</h3>
+                        <p class="text-muted">Our funds have consistently outperformed market benchmarks with an average annual return of 12.5% over the past decade.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Low Fees</h3>
+                        <p class="text-muted">With expense ratios as low as 0.25%, you keep more of your returns compared to industry averages.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Risk Management</h3>
+                        <p class="text-muted">Our diversified portfolios are designed to minimize risk while maximizing growth potential.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Access</h3>
+                        <p class="text-muted">Manage your investments anytime, anywhere with our award-winning mobile app.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Expert Management</h3>
+                        <p class="text-muted">Our team of seasoned portfolio managers has over 100 years of combined experience.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Security First</h3>
+                        <p class="text-muted">Your investments are protected with bank-level security and SIPC insurance up to $500,000.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works py-5" id="how-it-works">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">How It Works</h2>
+                <p class="text-muted mx-auto" style="max-width: 700px;">
+                    Getting started with WealthFront Mutual Funds is quick and easy.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center">
+                        <div class="step-number">1</div>
+                        <h3>Create Your Account</h3>
+                        <p class="text-muted">Sign up in minutes with just your basic information and funding source.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center">
+                        <div class="step-number">2</div>
+                        <h3>Select Your Funds</h3>
+                        <p class="text-muted">Choose from our curated selection of funds based on your risk tolerance and goals.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center">
+                        <div class="step-number">3</div>
+                        <h3>Fund Your Account</h3>
+                        <p class="text-muted">Transfer money from your bank account to start investing. Minimum $500.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="text-center">
+                        <div class="step-number">4</div>
+                        <h3>Watch It Grow</h3>
+                        <p class="text-muted">Our experts manage your investments while you track performance in real-time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-3">Ready to Start Building Your Wealth?</h2>
+            <p class="mb-4 mx-auto" style="max-width: 700px; opacity: 0.9;">
+                Join over 500,000 investors who trust WealthFront with their financial future.
+            </p>
+            <a href="#start-now" class="btn cta-btn fw-bold">Start Investing Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">WealthFront</h3>
+                    <p class="text-muted">Making smart investing accessible to everyone.</p>
+                </div>
+                <div class="col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">Products</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Mutual Funds</a></li>
+                        <li><a href="#">Retirement Accounts</a></li>
+                        <li><a href="#">College Savings</a></li>
+                        <li><a href="#">Taxable Accounts</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Investment Guide</a></li>
+                        <li><a href="#">Market Research</a></li>
+                        <li><a href="#">Financial Calculator</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center pt-4 mt-4 copyright">
+                <p class="text-muted">&copy; 2023 WealthFront Mutual Funds. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sign In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Same login form content as above -->
+                <div id="loginAlert" class="alert alert-danger d-none"></div>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <input type="email" class="form-control" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-login">Sign In</button>
+                </form>
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+                    <p><a href="#">Forgot password?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
