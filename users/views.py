@@ -21,6 +21,7 @@ import requests
 import logging
 from django.views.decorators.csrf import csrf_exempt
 import uuid
+from django.utils.decorators import method_decorator
 
 def landing_page(request):
     return render(request, 'landing.html')
@@ -149,7 +150,7 @@ class VerifyOTPView(APIView):
             return Response(serializer.errors, status=400)
 
 #Login
-
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginOTPView(APIView):
     def post(self,request):
         email = request.data.get('email')
