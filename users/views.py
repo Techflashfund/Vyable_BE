@@ -72,6 +72,8 @@ class UserPANViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return UserPAN.objects.none()
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return UserPAN.objects.all()  # Admins see all
