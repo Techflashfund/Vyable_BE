@@ -343,7 +343,7 @@
                 }
             });
 
-            fetch('/api/investdata/', {
+            fetch('https://vyable-be.onrender.com/api/investdata/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -413,7 +413,7 @@ document.addEventListener('click', function (event) {
         const entry = JSON.parse(event.target.getAttribute('data-entry'));
 
         // Send a POST request to the server with item and provider data
-        fetch('schemeviewer/', {
+        fetch('https://vyable-be.onrender.com/schemeviewer/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
