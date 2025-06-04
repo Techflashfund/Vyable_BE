@@ -284,7 +284,8 @@ class PersonalDetailsViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # Optionally restrict to the logged-in user
+        if getattr(self, 'swagger_fake_view', False):
+                 return UserPAN.objects.none()
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return PersonalDetails.objects.all()
@@ -300,7 +301,7 @@ class NomineeViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # Optionally filter nominees by logged-in user
+        
         user = self.request.user
         return self.queryset.filter(user=user)
 
@@ -314,6 +315,8 @@ class PayoutBankAccountViewSet(viewsets.ModelViewSet):
     serializer_class = PayoutBankAccountSerializer
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+             return UserPAN.objects.none()
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return PayoutBankAccount.objects.all()
@@ -329,6 +332,8 @@ class CommunicationPhoneViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return UserPAN.objects.none()
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return CommunicationPhone.objects.all()
@@ -342,6 +347,8 @@ class CommunicationEmailViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return UserPAN.objects.none()
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return CommunicationEmail.objects.all()
@@ -355,6 +362,8 @@ class CommunicationDetailsViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return UserPAN.objects.none()
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return  CommunicationDetails.objects.all()
