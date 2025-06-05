@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'corsheaders',
     'drf_yasg',
+    'scheme'
 
 ]
 
@@ -99,10 +100,14 @@ DATABASES = {
         'PASSWORD': os.getenv('DUMPDB_PASSWORD'),
         'HOST': os.getenv('DUMPDB_HOST'),
         'PORT': os.getenv('DUMPDB_PORT', '5432'),
+         'OPTIONS': {
+        'options': '-c search_path=ones_master_db,public'
+    }
+
     }
 }
 
-DATABASE_ROUTERS = ['mf_app.db_routers.DumpDBRouter']
+DATABASE_ROUTERS = ['db_router.DumpDBRouter']
 
 
 # Password validation
@@ -132,7 +137,9 @@ REST_FRAMEWORK = {
 
      'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 30,  # or any number
 }
 
 

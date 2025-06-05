@@ -1,11 +1,11 @@
 class DumpDBRouter:
     def db_for_read(self, model, **hints):
-        if model._meta.app_label == 'analytics':  # example app using dump DB
+        if model._meta.app_label == 'scheme':  # example app using dump DB
             return 'dump_db'
         return None
 
     def db_for_write(self, model, **hints):
-        if model._meta.app_label == 'analytics':
+        if model._meta.app_label == 'scheme':
             return 'dump_db'
         return None
 
@@ -13,6 +13,6 @@ class DumpDBRouter:
         return True
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
-        if app_label == 'analytics':
+        if app_label == 'scheme':
             return db == 'dump_db'
         return db == 'default'
