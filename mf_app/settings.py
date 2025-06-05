@@ -91,8 +91,18 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+    },
+    'dump_db': {  
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DUMPDB_NAME'),
+        'USER': os.getenv('DUMPDB_USER'),
+        'PASSWORD': os.getenv('DUMPDB_PASSWORD'),
+        'HOST': os.getenv('DUMPDB_HOST'),
+        'PORT': os.getenv('DUMPDB_PORT', '5432'),
     }
 }
+
+DATABASE_ROUTERS = ['mf_app.db_routers.DumpDBRouter']
 
 
 # Password validation
